@@ -1,2 +1,3 @@
 # gossip_springboot
-基于springboot，mybatis-plus，构建的仿微博
+springboot+mybatis-plus+shiro+ailiyun-OSS，构建的gossip(仿微博)
+
