@@ -1,0 +1,454 @@
+<html>
+	<head>
+		<title>主页</title>
+		<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+		<meta content="MSHTML 6.00.2600.0" name=GENERATOR>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		 crossorigin="anonymous">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		 crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		 crossorigin="anonymous"></script>
+		<script type="text/javascript" src="webuploader/webuploader.min.js"></script>
+		<link rel="stylesheet" href="css/upload.css" />
+		<script type="text/javascript" src="js/upload.js"></script>
+		<link rel="stylesheet" href="webuploader/webuploader.css" />
+		<script type="text/javascript" src="js/jqthumb.js"></script>
+		<link rel="stylesheet" href="css/box.css" />
+		<script src="js/template.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/gossip.js"></script>
+		<script src="js/comment.js"></script>
+		<script src="js/relation.js"></script>
+		<script src="js/member.js"></script>
+		<script src="js/love.js"></script>
+		<script src="js/jquery.twbsPagination.js"></script>
+		<script src="js/cropper.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/cropper.css" />
+		
+		  <style>
+		    .label {
+		      cursor: pointer;
+		    }
+		
+		    .progress {
+		      display: none;
+		      margin-bottom: 1rem;
+		    }
+		
+		    .alert {
+		      display: none;
+		    }
+		
+		    .img-container img {
+		      max-width: 100%;
+		    }
+		  </style>
+	</head>
+	<body style="background-color: beige;">
+		<div class="container">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+				 aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+					<a class="navbar-brand" href="#">GOSSIP</a>
+					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+						<li class="nav-item active">
+							<a class="nav-link" href="#" onclick="switchPage('friendsCircle')">主页<span class="sr-only">(current)</span></a>
+						</li>
+						<li class="nav-item active">
+							<a class="nav-link" href="#" onclick="switchPage('square')">广场<span class="sr-only">(current)</span></a>
+						</li>
+					</ul>
+					<form class="form-inline my-2 my-lg-0" style="position: relative; right: 20px;">
+						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					</form>
+					<!-- Example single danger button -->
+					<div class="btn-group">
+						<img id="profile_avatar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="img-circle"
+						 height="40px" style="border-radius:50%;cursor: pointer;" />
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editProfileModal">编辑个人资料</a>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<div class="row">
+				<div class="col-3">
+					&nbsp
+					<div class="card">
+						<div style="background: #76B852; height: 100px;">
+							<img id="profile_avatar1" alt="..." class="img-thumbnail" height="80px" width="80px" style="border-radius:50%;position: relative; top: 60px; left: 20px;">
+						</div>
+						<div class="card-body">
+							<a style="position: relative;left: 90px; top: -20px;">
+								<p id="profile_memberName"></p>
+							</a>
+							<ul class="list-group">
+								<li class="list-group-item d-flex justify-content-between align-items-center" onclick="queryByMemberId(0,0)">
+									<a href="#">闲话</a>
+									<span id="profile_gossipCount" class="badge badge-primary badge-pill">14</span>
+								</li>
+								<li class="list-group-item d-flex justify-content-between align-items-center" onclick="findFollowing(0)">
+									<a href="#">关注</a>
+									<span id="profile_followingCount" class="badge badge-primary badge-pill">2</span>
+								</li>
+								<li class="list-group-item d-flex justify-content-between align-items-center" onclick="findFollower(0)">
+									<a href="#">粉丝</a>
+									<span id="profile_followerCount" class="badge badge-primary badge-pill">1</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					&nbsp
+					<div class="card gedf-card" id="postGossipContent">
+						<div class="card-header">
+							<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts"
+									 aria-selected="true">发文</a>
+								</li>
+							</ul>
+						</div>
+						<div class="card-body">
+							<div class="tab-content" id="myTabContent">
+								<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+									<div class="form-group">
+										<label class="sr-only" for="message">post</label>
+										<textarea class="form-control" id="message" rows="3" placeholder="有什么新鲜事？"></textarea>
+									</div>
+								</div>
+							</div>
+							<div id="uploader-demo">
+								<div class="webuploader-container">
+									<div id="fileList" class="uploader-list"></div>
+									<div id="one" style="float: left; margin-left: 40%;">
+										<input type="file" name="file" multiple="multiple" formenctype="multipart/form-data" accept="image/*" style="display: none;">
+										<label style="cursor: pointer; background: rgb(255, 255, 255);"></label>
+									</div>
+								</div>
+							</div>
+							<div class="btn-toolbar">
+								<div class="btn-group">
+									<button type="button" class="btn btn-primary" id="filePicker">选图</button>
+									<button type="submit" class="btn btn-primary" id="btn_post" onclick="postGossip()">分享</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="gossipDiv">
+					</div>
+					<nav aria-label="Page navigation">
+						<ul class="pagination" id="friendCirclePagination"></ul>
+						<ul class="pagination" id="squarePagination"></ul>
+						<ul class="pagination" id="followerPagination"></ul>
+						<ul class="pagination" id="followingPagination"></ul>
+						<ul class="pagination" id="someonePagination"></ul>
+					</nav>
+					<div class="modal fade" id="gossipModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					 aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header" id="modal_header">
+								</div>
+								<div class="modal-body" id="modal_body">
+									<div class="row">
+										<div class="col">
+											<span id="commentTo"></span>
+											<textarea id="text_comment" class="form-control" rows="1" placeholder="发表评论?"></textarea>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9"></div>
+										<div class="col-3" style="margin-right: 0px;"><button onclick="postComment()" id="btn_comment" type="button"
+											 class="btn btn-primary" style="margin-top: 10px;float: right">发表</button></div>
+									</div>
+								</div>
+								<div class="modal-body" id="modal_footer">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Button trigger modal -->
+
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+					 aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary">Save changes</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-3">
+					&nbsp
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		 aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">编辑个人资料</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<img id="edit_profile_avatar" class="img-thumbnail" height="80px" width="80px" style="border-radius:50%;">
+						<input type="file"  id="input_avatar" name="image" accept="image/*">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="changeAvatar()">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="cropperModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalLabel">Crop the image</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="img-container">
+							<img id="image">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" id="crop">Crop</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		$('#gossipModal').on('show.bs.modal', function (event) {
+				var button = $(event.relatedTarget);
+				var recipient = 'gossipCard'+button.data('whatever')
+				console.log($('#'+recipient)[0].innerHTML);
+				document.getElementById('modal_header').innerHTML = $('#'+recipient)[0].innerHTML;
+				var gossipId = $('#modal_header').find('.row').first().attr('id');
+				gossipId = gossipId.substring(9);
+				queryComment(gossipId);
+		});	
+		$('#editProfileModal').on('show.bs.modal', function (event) {
+			uploadImg();
+		});	
+	</script>
+	<script>
+		initPage();	
+		function initPage(){
+			var memberInfo = app.getMemberInfo();
+			$('#profile_avatar').attr('src', app.imgServerUrl + memberInfo.avatar);
+			$('#profile_avatar1').attr('src', app.imgServerUrl + memberInfo.avatar);
+			$('#profile_memberName').text(memberInfo.memberName);
+			$('#profile_gossipCount').text(memberInfo.gossipCount);
+			$('#profile_followerCount').text(memberInfo.followerCount);
+			$('#profile_followingCount').text(memberInfo.followingCount);
+			timeLine(0);
+		}
+		
+		
+		function switchPage(page){
+			console.log(page);
+			if(page === "friendsCircle"){
+				$('#postGossipContent').show();
+				timeLine(0);
+			}
+			if(page === "square"){
+				$('#postGossipContent').hide();
+				square(0);
+			}
+			
+		}
+		
+	
+	</script>
+	<script id="gossipTemplate" type="text/html">
+		<%for(var i = 0; i < list.length; i++) {%>
+									<div class="card">
+					<div class="card-body" style="padding:10px;" id=<%:='gossipCard'+list[i].gossipId%> >
+						<div class="row" id=<%:='gossipRow'+list[i].gossipId%>  >
+							<div class="col-1" style="padding-right: 0px;">
+								<img src="<%:=list[i].avatar%>"  class="img-circles" height="48px" width="48px" style="border-radius:50%" />
+							</div>
+							<div class="col-11" style="padding-left: 30px;">
+								<div class="row align-items-start" style="margin-right: 0px;">
+									<div class="col" style="position: relative;left: 0px;">
+										<a href=<%:='profile.html?memberId/'+list[i].memberId%> target="_blank" style="position: relative;left: 0px;"><%:=list[i].memberName%></a>
+										<span><%:=list[i].date%></span>
+									</div>
+									<div class="col" style="margin: 0px; padding: 0px;">
+										<div class="btn-group" style="float: right;">
+											<button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+											 aria-haspopup="true" aria-expanded="false">
+												<span class="sr-only">Toggle Dropdown</span>
+											</button>
+											<div class="dropdown-menu">
+												<%if(list[i].isFollowing == 1){%>
+												<a name="link_relation_<%=list[i].memberId%>" class="dropdown-item" href="#" onclick="deleteAttention(<%=list[i].memberId%>)">取消关注</a>
+												<%}%>
+												<%if(list[i].isFollowing == 0){%>
+												<a name="link_relation_<%=list[i].memberId%>" class="dropdown-item" href="#" onclick="addAttention(<%=list[i].memberId%>)">关注</a>
+												<%}%>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row align-items-center">
+									<div class="col-11">
+										<span><%:=list[i].content%></span>
+									</div>
+								</div>
+								<div class="row align-items-center" style="padding-top: 20px;" data-toggle="modal" data-whatever=<%:=list[i].gossipId%> data-target="#gossipModal">
+									<div class="col-10">
+										<%if(list[i].picCount == 1){%>
+											<img class="img-fluid" src=<%:=list[i].pic1%> />
+										<%}%>
+										<%if(list[i].picCount == 2){%>
+										<div class="row">
+											<div class="col">										
+												<img class="img-fluid" src=<%:=list[i].pic1%> />
+											</div>
+											<div class="col">
+												<img class="img-fluid" src=<%:=list[i].pic2%> />
+											</div>
+										</div>
+										<%}%>
+										<%if(list[i].picCount == 3){%>
+										<div class="row">
+											<div class="col-8">										
+												<img class="img-fluid" src=<%:=list[i].pic1%> />
+											</div>
+											<div class="col-4">
+												<img class="img-fluid" src=<%:=list[i].pic2%> />
+												<img class="img-fluid" src=<%:=list[i].pic3%> />
+											</div>
+										</div>
+										<%}%>
+										<%if(list[i].picCount == 4){%>
+										<div class="row">
+											<div class="col">										
+												<img class="img-fluid" src=<%:=list[i].pic1%> />
+												<img class="img-fluid" src=<%:=list[i].pic3%> />
+											</div>
+											<div class="col">
+												<img class="img-fluid" src=<%:=list[i].pic2%> />
+												<img class="img-fluid" src=<%:=list[i].pic4%> />
+											</div>
+										</div>
+										<%}%>
+									</div>
+								</div>
+								<div class="row align-items-end" style="margin-top: 20px;">
+									<div class="col-2" data-toggle="modal" data-whatever=<%:=list[i].gossipId%> data-target="#gossipModal">
+										<i class="fa fa-comment-o"></i>
+										<span id="commentNum"><%:=list[i].commentCount%></span>
+									</div>
+									<div class="col-2">
+										<%if(list[i].loved==true){%>
+											<i id="<%:='love_'+list[i].gossipId%>" class="fa fa-heart" style="color: red;" onclick="unLoveGossip(<%:=list[i].gossipId%>)"></i>
+										<%}%>
+										<%if(list[i].loved==false){%>
+											<i id="<%:='love_'+list[i].gossipId%>" class="fa fa-heart-o" onclick="loveGossip(<%:=list[i].gossipId%>)"></i>
+										<%}%>
+										<span id="<%:='loveCount_'+list[i].gossipId%>" ><%:=list[i].loveCount%></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<%}%>
+		</script>
+	<script type="text/html" id="commentTemplate">
+		<%for(var i = 0; i < list.length; i++) {%>
+			<div class=" card">
+			<div class="card-body">
+			<div class="row">
+				<div class="col-2">
+						<img src=<%:=list[i].avatar%> class="img-circles" height="48px" width="48px" style="border-radius:50%" />
+				</div>
+				<div class="col-8">
+					<div class="row">
+						<div class="col-4"><%:=list[i].memberName%></div>
+						<div class="col-8"><%:=list[i].commentTimeStr%></div>
+					</div>
+					<div class="row">
+						<div class="col">
+								<%:=list[i].commentContent%>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			</div>
+			<%}%>
+		</script>
+
+	<script id="followingListTemplate" type="text/html">
+		<%for(var i=0;i<list.length;i++){%>
+				<div class=" card">
+				<div class="card-body">
+				<div class="row">
+					<div class="col-2">
+							<img src=<%:=list[i].avatar%> class="img-circles" height="48px" width="48px" style="border-radius:50%" />
+					</div>
+					<div class="col-8">
+						<div class="row">
+							<div class="col-4"><%:=list[i].memberName%></div>
+							<div class="col-8"><button class="btn btn-primary" onclick="deleteAttention(<%=list[i].memberId%>)">取消关注</button></div>
+						</div>
+					</div>
+				</div>
+				</div>
+				</div>
+			<%}%>
+		</script>
+
+	<script id="followerListTemplate" type="text/html">
+		<%for(var i=0;i<list.length;i++){%>
+				<div class=" card">
+				<div class="card-body">
+				<div class="row">
+					<div class="col-2">
+							<img src=<%:=list[i].avatar%> class="img-circles" height="48px" width="48px" style="border-radius:50%" />
+					</div>
+					<div class="col-8">
+						<div class="row">
+							<div class="col-4"><%:=list[i].memberName%></div>
+						</div>
+					</div>
+				</div>
+				</div>
+				</div>
+			<%}%>
+		</script>
+</html>
