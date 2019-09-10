@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.imcu.gossip.mapper.GossipMapper">
+    <select id="selectTimeLine" parameterType="Integer" resultType="site.imcu.gossip.pojo.vo.GossipVo">
+        SELECT * FROM gossip INNER JOIN member ON gossip.member_id = member.member_id  where gossip.member_id in
+        (SELECT following_id from relation where follower_id = #{memberId} and is_del = 0) or gossip.member_id = #{memberId}
+        and gossip.is_del = 0
+        ORDER BY gossip.post_time desc
+    </select>
+
+    <select id="selectGossipVoPage" resultType="site.imcu.gossip.pojo.vo.GossipVo">
+        SELECT * FROM gossip INNER JOIN member ON gossip.member_id = member.member_id  where gossip.is_del = 0
+        ORDER BY gossip.post_time desc
+    </select>
+
+    <select id="selectGossipVoByMemberId" resultType="site.imcu.gossip.pojo.vo.GossipVo">
+        SELECT * FROM gossip INNER JOIN member ON gossip.member_id = member.member_id  where gossip.member_id = #{memberId} and gossip.is_del = 0
+        ORDER BY gossip.post_time desc
+    </select>
+</mapper>
