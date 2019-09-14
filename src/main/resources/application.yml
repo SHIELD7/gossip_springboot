@@ -5,7 +5,7 @@ spring:
     password: msm8996z2131
     url: jdbc:mysql://127.0.0.1:3306/gossip_dev?serverTimezone=UTC
 server:
-  port: 8080
+  port: 1234
 
 
 logging:

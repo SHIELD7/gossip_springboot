@@ -38,6 +38,7 @@ function postComment() {
 }
 
 function queryComment(gossipId) {
+	document.getElementById('modal_comment').innerHTML = "";
 	console.log(gossipId);
 	var data = {};
 	data.gossipId = gossipId;
@@ -67,7 +68,7 @@ function queryComment(gossipId) {
 			}
 			payload.list = result;
 			var html = template(document.getElementById('commentTemplate').innerHTML, payload);
-			document.getElementById('modal_footer').innerHTML = html;
+			document.getElementById('modal_comment').innerHTML = html;
 		} else {
 			alert(responseResult.msg);
 		}
