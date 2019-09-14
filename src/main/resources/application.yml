@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: msm8996z2131
+    password: 
     url: jdbc:mysql://127.0.0.1:3306/gossip_dev?serverTimezone=UTC
 server:
   port: 1234
@@ -21,12 +21,3 @@ swagger:
 ##mybatis-plus配置控制台打印完整带参数SQL语句
 mybatis-plus:
   mapper-locations: mapper/*.xml
-
-#jwt配置
-dhb:
-  jwt:
-    # 加密秘钥
-    secret: f4e2e52034348f86b67cde581c0f9eb5
-    # token有效时长，7天，单位秒
-    expire: 604800
-    header: Token
